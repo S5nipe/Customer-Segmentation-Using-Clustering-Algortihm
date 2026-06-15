@@ -1,0 +1,186 @@
+# Customer Segmentation Using Clustering Algorithms
+
+An unsupervised machine learning project that analyzes mall customer 
+purchasing behavior and identifies meaningful customer segments using 
+clustering techniques to support targeted marketing strategies.
+
+---
+
+## Research Objective
+Analyze customer purchasing behavior and identify distinct customer 
+groups using clustering algorithms, then develop tailored marketing 
+strategies for each segment.
+
+---
+
+## Dataset
+**Mall Customer Segmentation Dataset**
+- 200 customer records
+- 5 features: CustomerID, Gender, Age, Annual Income (k$), Spending Score (1-100)
+- Source: [Kaggle](https://www.kaggle.com/datasets/vjchoudhary7/customer-segmentation-tutorial-in-python)
+
+---
+
+## Project Structure
+
+customer-segmentation-clustering/
+
+│
+
+├── Customer_Segmentation.ipynb   # Main Jupyter Notebook
+
+├── Mall_Customers.csv            # Dataset
+
+├── app.py                        # Streamlit application (in progress)
+
+├── requirements.txt              # Python dependencies
+
+├── README.md                     # Project documentation
+
+│
+
+└── models/
+
+├── kmeans_model.pkl          # Saved K-Means model
+
+├── scaler.pkl                # Fitted StandardScaler
+
+├── dbscan_model.pkl          # Saved DBSCAN model
+
+├── hierarchical_model.pkl    # Saved Hierarchical model
+
+└── segmented_customers.csv  # Final segmented dataset
+
+---
+
+## Methodology
+
+### 1. Exploratory Data Analysis
+- Distribution analysis of Age, Income, and Spending Score
+- Gender distribution and spending comparison
+- Correlation heatmap
+- Outlier detection using IQR method
+- Spending patterns by age group
+
+### 2. Preprocessing
+- Dropped CustomerID (non-informative)
+- Label encoded Gender (Female=0, Male=1)
+- Applied StandardScaler to all numeric features
+- Defined two feature sets:
+  - **X_2d** — Income + Spending Score (for K-Means)
+  - **X_full** — All 4 features (for DBSCAN)
+
+### 3. Finding Optimal Clusters
+- Elbow Method — clear bend at k=5
+- Silhouette Score — peak of 0.55 at k=5
+- Both methods confirmed k=5
+
+### 4. Clustering Algorithms
+
+| Algorithm | Feature Set | Parameters | Silhouette |
+|---|---|---|---|
+| K-Means | X_2d | k=5, k-means++ | 0.5547 |
+| DBSCAN | X_full | eps=0.8, min_samples=5 | 0.4821 |
+| Hierarchical | X_full | Ward linkage, n=5 | 0.5102 |
+
+---
+
+## Results — Customer Segments
+
+| Cluster | Segment | Age | Income | Spending | Priority |
+|---|---|---|---|---|---|
+| 0 | Average Customer | 43 | 55k | 50 | Medium |
+| 1 | High Income, High Spender | 33 | 87k | 82 | Highest |
+| 2 | Young, Low Income, High Spender | 25 | 26k | 79 | High |
+| 3 | High Income, Low Spender | 41 | 88k | 17 | High Potential |
+| 4 | Middle-Aged, Low Income, Low Spender | 45 | 26k | 21 | Low |
+
+> DBSCAN additionally identified **13 outlier customers** who do not 
+> fit any segment and require individual attention.
+
+---
+
+## Marketing Strategies
+
+| Segment | Strategy |
+|---|---|
+| High Income, High Spender | VIP loyalty program, exclusive perks, premium campaigns |
+| Young, Low Income, High Spender | Social media, influencer campaigns, buy-now-pay-later |
+| High Income, Low Spender | Premium quality messaging, exclusive bundles, incentives |
+| Average Customer | Seasonal promotions, upselling, loyalty points |
+| Middle-Aged, Low Income, Low Spender | Budget deals, SMS promotions, clearance sales |
+
+---
+
+## Streamlit App
+An interactive web app where you can input customer details and 
+instantly receive their predicted segment and marketing recommendation.
+
+> ⚠️ Currently functional but under active improvement. 
+> UI enhancements and additional features are in progress.
+
+### Run locally:
+```bash
+pip install -r requirements.txt
+streamlit run app.py
+```
+
+---
+
+## Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/yourusername/customer-segmentation-clustering.git
+cd customer-segmentation-clustering
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Launch the notebook
+jupyter notebook Customer_Segmentation.ipynb
+```
+
+---
+
+## Requirements
+pandas
+
+numpy
+
+matplotlib
+
+seaborn
+
+scikit-learn
+
+scipy
+
+joblib
+
+streamlit
+
+jupyter
+
+---
+
+## Key Findings
+- K-Means on Income + Spending Score produced the clearest segments
+- Income alone does NOT predict spending behavior
+- High Income, Low Spender segment represents the biggest 
+  untapped revenue opportunity
+- Young customers spend heavily regardless of income level
+- 13 customers identified as outliers requiring individual strategies
+
+---
+
+## Tech Stack
+Python · Jupyter Notebook · scikit-learn · pandas · 
+matplotlib · seaborn · scipy · joblib · Streamlit
+
+---
+
+## Topics
+`machine-learning` `clustering` `kmeans` `dbscan` 
+`customer-segmentation` `unsupervised-learning` 
+`python` `jupyter` `streamlit` `marketing-analytics`
